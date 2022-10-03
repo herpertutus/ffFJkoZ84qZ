@@ -1,25 +1,28 @@
-#import flask - from the package import class
-from flask import Flask 
-from flask_bootstrap import Bootstrap5
+from flask import Flask
+from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
+
+
+#place this outside as it needs to be imported in models.py
 db=SQLAlchemy()
 
-#create a function that creates a web application
-# a web server will run this web application
+
 def create_app():
-  
-    app=Flask(__name__)  # this is the name of the module/package that is calling this app
+    app=Flask(__name__)
     app.debug=True
-    app.secret_key='utroutoru'
-    #set the app configuration data 
-    app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///sitedata.sqlite'
-    #initialize db with flask app
+    app.secret_key='thisisasecretkey122'
+    
+    #db configurations for the app
+    app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///hotel.db'
+    
+    #initialize the database with Flask app
     db.init_app(app)
 
-    bootstrap = Bootstrap5(app)
-    
+    boostrap = Bootstrap(app)
+
+    #add login manager support
     #initialize the login manager
     login_manager = LoginManager()
     
@@ -29,20 +32,16 @@ def create_app():
     login_manager.init_app(app)
 
     #create a user loader function takes userid and returns User
-    #from .models import User  # importing here to avoid circular references
-    #@login_manager.user_loader
-    #def load_user(user_id):
-    #    return User.query.get(int(user_id))
-
-    #importing views module here to avoid circular references
-    # a commonly used practice.
-    from . import views
-    app.register_blueprint(views.bp)
-
-    from . import auth
-    app.register_blueprint(auth.bp)
+    from .models import User  # importing here to avoid circular references
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
     
+    from .views import mainbp
+    app.register_blueprint(mainbp)
+
+    # register the blueprint with the app
+    from .auth import bp
+    app.register_blueprint(bp)
+
     return app
-
-
-

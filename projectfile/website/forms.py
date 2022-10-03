@@ -1,23 +1,37 @@
-
 from flask_wtf import FlaskForm
-from wtforms.fields import TextAreaField,SubmitField, StringField, PasswordField
-from wtforms.validators import InputRequired, Length, Email, EqualTo
+from wtforms import (StringField, SubmitField,TextAreaField, 
+                        Form, IntegerField, FormField, PasswordField, SelectField)
+from wtforms.validators import InputRequired, Email, EqualTo
 
+   
 
-#creates the login information
+class HotelForm(FlaskForm):
+    name=StringField('Name')
+    description=TextAreaField('Description')
+    image = StringField('Image File Name')
+    submit = SubmitField("Create")
+
 class LoginForm(FlaskForm):
-    user_name=StringField("User Name", validators=[InputRequired('Enter user name')])
-    password=PasswordField("Password", validators=[InputRequired('Enter user password')])
-    submit = SubmitField("Login")
+  username = StringField('User Name', validators=[InputRequired()])
+  password = PasswordField('Password', validators=[InputRequired()])
+  submit = SubmitField('Login')
 
- # this is the registration form
+
 class RegisterForm(FlaskForm):
-    user_name=StringField("User Name", validators=[InputRequired()])
-    email_id = StringField("Email Address", validators=[Email("Please enter a valid email")])
-    #linking two fields - password should be equal to data entered in confirm
-    password=PasswordField("Password", validators=[InputRequired(),
-                  EqualTo('confirm', message="Passwords should match")])
-    confirm = PasswordField("Confirm Password")
+    username = StringField('User Name', validators=[InputRequired()])
+    email = StringField('Email ID', validators=[InputRequired(),Email() ])
+    #password field
+    password = PasswordField('Password', validators=[InputRequired()])
+  #validator to check if the user entry is equal to password
+    confirm = PasswordField('Confirm Password', 
+          validators=[EqualTo('password', message='Re-enter same as Password')])
 
-    #submit button
-    submit = SubmitField("Register")
+    usertype = SelectField('User Type', choices=[('guest', 'Guest'),('admin', 'Administrator')])
+    submit = SubmitField('Register')
+
+
+  
+class ContactForm(FlaskForm):
+    user_name = StringField('Name' )    
+    email = StringField('Email Address')
+    submit = SubmitField("Submit")
