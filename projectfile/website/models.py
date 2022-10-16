@@ -4,11 +4,11 @@ from flask_login import UserMixin
 class User(db.Model, UserMixin):
     __tablename__='users'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), index=True, unique=True, nullable=False)
-    emailid = db.Column(db.String(100), index=True, nullable=False)
-    password_hash = db.Column(db.String(255), nullable=False)#should be 128 in length to store hash
+    username = db.Column(db.String(100), index=True, unique=True, nullable=False)
+    email = db.Column(db.String(100), index=True, nullable=False)
+    pwhash = db.Column(db.String(255),unique=True, nullable=False)#should be 128 in length to store hash
     
-    usertype = db.Column(db.String(20), nullable=False, default='guest')
+    type = db.Column(db.String(20), nullable=False, default='guest')
 
 
     def __repr__(self):

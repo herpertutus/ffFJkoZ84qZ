@@ -2,6 +2,10 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% block content %}
 
-<h1>account page, shows logged in user along with booking history and other</h1>
+{% if current_user.is_authenticated %}
+<h3>account stuff for logged in user {{ current_user.username }} </h3>
+{% else %}
+<h3>Sign in to view this page</h3>
+{% endif %}
 
 {% endblock %}
