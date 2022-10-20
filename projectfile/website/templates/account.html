@@ -2,8 +2,61 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% block content %}
 
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+  {% for message in messages %}
+      <div class="alert alert-success container card accountdetailscard formbox">
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+{% endwith %}
+
 {% if current_user.is_authenticated %}
-<h3>account stuff for logged in user {{ current_user.username }} </h3>
+<!-- <h3>account stuff for logged in user {{ current_user.username }} </h3> -->
+    <hr class="hr">
+
+    <!-- account info section -->
+    <div>
+    <h3 class="spacertxt">Logged in as: @{{ current_user.username }}</h3>
+    </div>
+    <div>
+    <h5 class="spacertxt">Account info</h5>
+    </div>
+    <div class="linelogo">
+    <div class="logo line"></div>
+    </div>
+
+    <div class="container card accountdetailscard">
+    <div class="card mb-3 smolevent eventhero" >
+        <div class="row g-0">
+        <div class="col-md-12 col-lg-8">
+            <div class="card-body smolcardbody ">
+            <p>User ID: #{{ current_user.id }}</p>
+            <p>Email: {{ current_user.email }}</p>
+            <p>Contact Number: {{ current_user.phnumber }}</p>
+            <a href="./event_details.html" class="btn eventinfobut" data-bs-toggle="modal" data-bs-target="#changeAccountModal">Update details</a>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- change details modal -->
+    <div class="modal fade" id="changeAccountModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalLabel">Update Account Information</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {{wtf.quick_form(form)}}
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% else %}
 <h3>Sign in to view this page</h3>
 {% endif %}

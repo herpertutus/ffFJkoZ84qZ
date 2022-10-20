@@ -281,6 +281,10 @@ div.collapse{
 .smolcardbody{
     padding: 30px;
 }
+.formbox{
+    border-color: #616161;
+    /* text-align: center; */
+}
 
 div.todaycard{
     border: transparent;

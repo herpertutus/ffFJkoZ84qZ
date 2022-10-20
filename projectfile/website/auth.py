@@ -7,6 +7,7 @@ from .models import User
 from .forms import LoginForm,RegisterForm
 from flask_login import login_user, login_required, logout_user
 from . import db
+from sqlalchemy import func
 
 
 #authentication blueprint
@@ -32,6 +33,29 @@ def login():
             flash(error)
 
     return render_template('logintemp.html', form=form)
+
+
+@bp.route('/register', methods = ['GET', 'POST'])
+def register():
+    form = RegisterForm()
+    if form.validate_on_submit():
+        # max = db.session.query(func.max(User.id)).first()
+
+        #get username, password and email from the form
+        uname =form.username.data
+        mail=form.email.data
+        number=form.phnumber.data
+        pwd = generate_password_hash(form.password.data)
+        
+        new_user = User(username=uname, pwhash=pwd, email=mail, phnumber=number)
+        db.session.add(new_user)
+        db.session.commit()
+
+        flash("Registered user successfully")
+        return redirect(url_for('auth.register'))
+       
+    return render_template('registertemp.html', form=form)
+
 
 
 @bp.route('/logout')
