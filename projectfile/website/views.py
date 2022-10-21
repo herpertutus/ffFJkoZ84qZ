@@ -1,3 +1,4 @@
+
 from flask import Blueprint,render_template, redirect, url_for, request, flash
 from flask_login import login_required, current_user
 from .forms import LoginForm,RegisterForm
@@ -53,6 +54,25 @@ def account():
     #needs: booking history
     return render_template('account.html', form=form)
 
-@bp.route('/test')
-def test():
-    return '<h1>test route<h1>'
+@bp.route('/event/<eventid>', methods = ['GET', 'POST'])
+def eventdetails(eventid):
+    #attempt to find event in the database
+    event = Event.query.filter_by(id=eventid).first()
+    if type(event) == Event:
+        owner = User.query.filter_by(id=event.ownerid).first()
+        return render_template('eventdetails.html',imgurl=event.imgurl,
+                                                   title=event.title,
+                                                   description=event.description,
+                                                   status=event.status,
+                                                   datetime=event.datetime,
+                                                   speaker=event.speaker,
+                                                   creator=f"@{owner.username}",
+                                                   tickets=event.tickets,
+                                                   ticketprice=event.price)
+
+
+
+    #render some sort of an error, no event found
+    return render_template('eventdetails.html')
+
+
