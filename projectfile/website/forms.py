@@ -31,7 +31,8 @@ class RegisterForm(FlaskForm):
 
 class CreateEventForm(FlaskForm):
     name = StringField("Event Name", validators=[InputRequired()])
-    date = DateField("Event Date", format='%m-%d-%Y', validators=[InputRequired()])
+    description = TextAreaField("Event Description", validators=[InputRequired(), Length(min=0, max= 200, message="description is too long")])
+    date = DateField("Event Date", format='%Y-%m-%d', validators=[InputRequired()])
     category = SelectField("Event Category", choices=[('mathcategory','math'), ('sciencecategory','science'), ('technologycategory','technology'), ('socialcategory','social'), ('businesscategory','business')], validators=[InputRequired()])
     image = FileField("Event Image", [InputRequired()])
     submit = SubmitField("Submit")

@@ -1,4 +1,5 @@
 
+import os
 from flask import Blueprint,render_template, redirect, url_for, request, flash
 from flask_login import login_required, current_user
 from .forms import CreateEventForm, LoginForm,RegisterForm
@@ -21,10 +22,24 @@ def index():
 def allevents():
     return render_template('events.html')
 
-@bp.route('/events/create')
+@bp.route('/events/create', methods = ['GET', 'POST'])
 @login_required
 def createEvent():
     form = CreateEventForm()
+    if form.validate_on_submit():
+        #event form values
+        eventName = form.name.data
+        eventDescription = form.description.data
+        eventDate = form.date.data
+        eventCategory = form.category.data
+        f = form.image.data
+
+        print(eventCategory)
+        print(eventDate)
+        print(eventDescription)
+        print(eventName)
+        print('event good')
+        return redirect(url_for('main.allevents'))
     return render_template('createevent.html', form=form)
 
 @bp.route('/contact')
