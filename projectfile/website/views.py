@@ -1,7 +1,7 @@
 
 from flask import Blueprint,render_template, redirect, url_for, request, flash
 from flask_login import login_required, current_user
-from .forms import LoginForm,RegisterForm
+from .forms import CreateEventForm, LoginForm,RegisterForm
 from werkzeug.security import generate_password_hash,check_password_hash
 
 from .models import User, Event, Comment, Booking
@@ -21,6 +21,11 @@ def index():
 def allevents():
     return render_template('events.html')
 
+@bp.route('/events/create')
+def createEvent():
+    form = CreateEventForm()
+    return render_template('createevent.html', form=form)
+
 @bp.route('/contact')
 def contact():
     return render_template('contact.html')
@@ -36,7 +41,7 @@ def account():
         mail=form.email.data
         number=form.phnumber.data
         pwd = generate_password_hash(form.password.data)
-        
+
         # new_user = User(username=uname, pwhash=pwd, email=mail, phnumber=number)
         thisuser = User.query.filter_by(id=f'{current_user.id}').first()
         print(thisuser)
