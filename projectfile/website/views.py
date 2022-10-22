@@ -22,6 +22,7 @@ def allevents():
     return render_template('events.html')
 
 @bp.route('/events/create')
+@login_required
 def createEvent():
     form = CreateEventForm()
     return render_template('createevent.html', form=form)
