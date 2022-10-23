@@ -27,15 +27,19 @@ def contact():
 
 @bp.route('/account', methods = ['GET', 'POST'])
 def account():
-    form = RegisterForm()
-    if form.validate_on_submit():
+    updateform = RegisterForm()
+
+    bookings = Booking.query.filter_by(userid=current_user.id).all()
+    print(f"---{bookings}---")
+
+    if updateform.validate_on_submit():
         # max = db.session.query(func.max(User.id)).first()
 
         #get username, password and email from the form
-        uname =form.username.data
-        mail=form.email.data
-        number=form.phnumber.data
-        pwd = generate_password_hash(form.password.data)
+        uname =updateform.username.data
+        mail=updateform.email.data
+        number=updateform.phnumber.data
+        pwd = generate_password_hash(updateform.password.data)
         
         # new_user = User(username=uname, pwhash=pwd, email=mail, phnumber=number)
         thisuser = User.query.filter_by(id=f'{current_user.id}').first()
@@ -49,18 +53,19 @@ def account():
         flash("Updated info successfully")
         return redirect(url_for('main.account'))
 
+    return render_template('account.html', updateform=updateform, bookings=bookings)
 
-    #this only should be accessed when user is logged in
-    #needs: booking history
-    return render_template('account.html', form=form)
 
 @bp.route('/event/<eventid>', methods = ['GET', 'POST'])
 def eventdetails(eventid):
     #attempt to find event in the database
     event = Event.query.filter_by(id=eventid).first()
+    
     if type(event) == Event:
         owner = User.query.filter_by(id=event.ownerid).first()
-        return render_template('eventdetails.html',imgurl=event.imgurl,
+        if(owner != current_user):
+            return render_template('eventdetails.html')
+        return render_template('eventdetails.html',imgurl=event.imgurl, 
                                                    title=event.title,
                                                    description=event.description,
                                                    status=event.status,

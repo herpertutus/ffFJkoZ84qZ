@@ -22,6 +22,8 @@ class Booking(db.Model):
     ticketprice = db.Column(db.Integer)
     qty = db.Column(db.Integer)
     date = db.Column(db.String(20), nullable=False)
+    imgurl = db.Column(db.String(200), index=True)
+    title = db.Column(db.String(40), index=True)
 
     def __repr__(self):
         return f"<id: {self.id}, date: {self.date}>"

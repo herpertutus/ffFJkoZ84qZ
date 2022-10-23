@@ -23,9 +23,15 @@
             <p class="card-text"><small class="text-muted">Creator: {{creator}}</small></p>
             <p class="card-text"><small class="text-muted">Available Tickets: {{tickets}}</small></p>
             <p class="card-text"><small class="text-muted">Ticket Price: {{ticketprice}}</small></p>
-
-            <a href="./event_details.html" class="btn eventinfobut" data-bs-toggle="modal" data-bs-target="#exampleModal">Book Tickets</a>
-            
+            {% if current_user.is_authenticated %}
+                {% if status == "Open" and tickets >= 1 %}
+                <a href="" class="btn eventinfobut" data-bs-toggle="modal" data-bs-target="#exampleModal">Book Tickets</a>
+                {% else %}
+                <p class="card-text"><small class="">Bookings Not Available</small></p>
+                {% endif %}
+            {% else %}
+            <a href="/login" class="btn eventinfobut" >Sign In To make Bookings</a>
+            {% endif %}
           </div>
         </div>
       </div>
@@ -50,15 +56,13 @@
                 </div> -->
                 <div class="col-md-12 col-lg-8">
                   <div class="card-body smolcardbody">
-                    <h5 class="card-title">Big Brain Math Bonanza</h5>
-                    <p class="card-text">This exciting talk features Big Brain Co. CEO and founder, Bob Butterboy. 
-                      Come join us on an exiting math discussion. Book tickets now!</p>
+                    <h5 class="card-title">{{title}}</h5>
                     <p class="card-text"><small class="text-muted">Status: Upcoming</small></p>
-                    <p class="card-text"><small class="text-muted">Date/Time: 11:59pm Su 18/9</small></p>
-                    <p class="card-text"><small class="text-muted">Speaker: Bob Butterboy</small></p>
-                    <p class="card-text"><small class="text-muted">Creator: eventadmin2000</small></p>
-                    <p class="card-text"><small class="text-muted">Available Tickets: 124</small></p>
-                    <p class="card-text"><small class="text-muted">Ticket Price: 300 Australian Rubles</small></p>
+                    <p class="card-text"><small class="text-muted">Date/Time: {{datetime}}</small></p>
+                    <p class="card-text"><small class="text-muted">Speaker: {{speaker}}</small></p>
+                    <p class="card-text"><small class="text-muted">Creator: {{creator}}</small></p>
+                    <p class="card-text"><small class="text-muted">Available Tickets: {{tickets}}</small></p>
+                    <p class="card-text"><small class="text-muted">Ticket Price: {{ticketprice}}</small></p>
                   </div>
                 </div>
               </div>
