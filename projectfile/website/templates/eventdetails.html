@@ -57,7 +57,7 @@
                 <div class="col-md-12 col-lg-8">
                   <div class="card-body smolcardbody">
                     <h5 class="card-title">{{title}}</h5>
-                    <p class="card-text"><small class="text-muted">Status: Upcoming</small></p>
+                    <p class="card-text"><small class="text-muted">Status: {{status}}</small></p>
                     <p class="card-text"><small class="text-muted">Date/Time: {{datetime}}</small></p>
                     <p class="card-text"><small class="text-muted">Speaker: {{speaker}}</small></p>
                     <p class="card-text"><small class="text-muted">Creator: {{creator}}</small></p>
@@ -75,7 +75,7 @@
           
         </div>
         <div class="modal-footer smolcardbody">
-          <p class="card-text"><small class="text-muted">Account: @ButterAppreciator21</small></p>
+          <p class="card-text"><small class="text-muted">Account: ((current_user.username))</small></p>
           <a href="" class="btn eventinfobut" data-bs-toggle="modal" data-bs-target="#exampleModal">Finalize Booking</a>
         </div>
       </div>
