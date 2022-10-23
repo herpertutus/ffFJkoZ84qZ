@@ -1,6 +1,7 @@
 
+from sqlite3 import Date
 from flask_wtf import FlaskForm
-from wtforms.fields import TextAreaField,SubmitField, StringField, PasswordField, TelField
+from wtforms.fields import TextAreaField,SubmitField, StringField, PasswordField, TelField, DateField, SelectField, FileField
 from wtforms.validators import InputRequired, Length, Email, EqualTo, Regexp
 
 
@@ -14,17 +15,24 @@ class LoginForm(FlaskForm):
 class RegisterForm(FlaskForm):
     username= StringField("User Name", validators=[InputRequired(),
                                                    Length(min= 0, max= 20, message="Username is too long")])
-    email = StringField("Email Address", validators=[InputRequired(), 
-                                                     Email("Please enter a valid email"), 
+    email = StringField("Email Address", validators=[InputRequired(),
+                                                     Email("Please enter a valid email"),
                                                      Length(min= 0, max= 35, message="Please enter a valid email")])
-    phnumber = TelField("Phone Number", validators=[InputRequired(), 
-                                                    Length(min= 10, max= 10, message="Enter valid phone number"), 
+    phnumber = TelField("Phone Number", validators=[InputRequired(),
+                                                    Length(min= 10, max= 10, message="Enter valid phone number"),
                                                     Regexp(r'\d+',message="Must be a digit")])
     #linking two fields - password should be equal to data entered in confirm
-    password = PasswordField("Password", [InputRequired(), 
+    password = PasswordField("Password", [InputRequired(),
                                           EqualTo('confirm', message="Passwords should match")])
     confirm = PasswordField("Confirm Password")
 
     #submit button
     submit = SubmitField("Submit")
 
+class CreateEventForm(FlaskForm):
+    name = StringField("Event Name", validators=[InputRequired()])
+    description = TextAreaField("Event Description", validators=[InputRequired(), Length(min=0, max= 200, message="description is too long")])
+    date = DateField("Event Date", format='%Y-%m-%d', validators=[InputRequired()])
+    category = SelectField("Event Category", choices=[('mathcategory','math'), ('sciencecategory','science'), ('technologycategory','technology'), ('socialcategory','social'), ('businesscategory','business')], validators=[InputRequired()])
+    image = FileField("Event Image", [InputRequired()])
+    submit = SubmitField("Submit")
