@@ -49,7 +49,6 @@ def contact():
 @bp.route('/account', methods = ['GET', 'POST'])
 def account():
     updateform = RegisterForm()
-
     bookings = Booking.query.filter_by(userid=current_user.id).all()
     print(f"---{bookings}---")
 
@@ -64,7 +63,6 @@ def account():
         
         # new_user = User(username=uname, pwhash=pwd, email=mail, phnumber=number)
         thisuser = User.query.filter_by(id=f'{current_user.id}').first()
-        print(thisuser)
         thisuser.username = uname
         thisuser.email = mail
         thisuser.pwhash = pwd
