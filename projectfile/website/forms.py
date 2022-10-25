@@ -1,7 +1,7 @@
 
 from sqlite3 import Date
 from flask_wtf import FlaskForm
-from wtforms.fields import TextAreaField,SubmitField, StringField, PasswordField, TelField, DateField, SelectField, FileField
+from wtforms.fields import TextAreaField,SubmitField, StringField, PasswordField, TelField, DateField, SelectField, IntegerField
 from wtforms.validators import InputRequired, Length, Email, EqualTo, Regexp
 
 
@@ -31,8 +31,11 @@ class RegisterForm(FlaskForm):
 
 class CreateEventForm(FlaskForm):
     name = StringField("Event Name", validators=[InputRequired()])
-    description = TextAreaField("Event Description", validators=[InputRequired(), Length(min=0, max= 200, message="description is too long")])
-    date = DateField("Event Date", format='%Y-%m-%d', validators=[InputRequired()])
+    tickets = IntegerField("Available Tickets", validators=[InputRequired()])
+    price = IntegerField("Ticket Price", validators=[InputRequired()])
     category = SelectField("Event Category", choices=[('mathcategory','math'), ('sciencecategory','science'), ('technologycategory','technology'), ('socialcategory','social'), ('businesscategory','business')], validators=[InputRequired()])
-    image = FileField("Event Image", [InputRequired()])
+    status = SelectField("Event Category", choices=[('Unpublished'), ('Available'), ('Closed')], validators=[InputRequired()])
+    description = TextAreaField("Event Description", validators=[InputRequired(), Length(min=0, max= 200, message="description is too long")])
+    date = StringField("Event Date", validators=[InputRequired()])
+    image = StringField("Event Image URL", [InputRequired()])
     submit = SubmitField("Submit")

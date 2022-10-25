@@ -7,7 +7,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(100), index=True, unique=True, nullable=False)
     email = db.Column(db.String(100), index=True, nullable=False)
     pwhash = db.Column(db.String(255),unique=True, nullable=False)#should be 128 in length to store hash
-    
+
     type = db.Column(db.String(20), nullable=False, default='guest')
     phnumber = db.Column(db.String(20), nullable=False)
 
@@ -33,7 +33,6 @@ class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     status = db.Column(db.String(20), nullable=False, default='Unpublished')
     datetime = db.Column(db.String(30), index=True)
-    speaker = db.Column(db.String(40), index=True)
     ownerid = db.Column(db.Integer)
     tickets = db.Column(db.Integer)
     price = db.Column(db.Integer)

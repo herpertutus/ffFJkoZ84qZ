@@ -1,5 +1,7 @@
 
+from datetime import datetime
 import os
+from unicodedata import category
 from flask import Blueprint,render_template, redirect, url_for, request, flash
 from flask_login import login_required, current_user
 from .forms import CreateEventForm, LoginForm,RegisterForm
@@ -20,7 +22,8 @@ def index():
 
 @bp.route('/events')
 def allevents():
-    return render_template('events.html')
+    events = Event.query.all()
+    return render_template('events.html', events = events)
 
 @bp.route('/events/create', methods = ['GET', 'POST'])
 @login_required
@@ -32,12 +35,21 @@ def createEvent():
         eventDescription = form.description.data
         eventDate = form.date.data
         eventCategory = form.category.data
-        f = form.image.data
+        eventImage = form.image.data
+        eventTickets = form.tickets.data
+        eventPrice = form.price.data
+        eventStatus = form.status.data
 
-        print(eventCategory)
-        print(eventDate)
-        print(eventDescription)
-        print(eventName)
+        new_event = Event(imgurl = eventImage,
+                          category = eventCategory,
+                          title = eventName,
+                          description = eventDescription,
+                          status = eventStatus,
+                          datetime = eventDate,
+                          tickets = eventTickets,
+                          price = eventPrice)
+        db.session.add(new_event)
+        db.session.commit()
         print('event good')
         return redirect(url_for('main.allevents'))
     return render_template('createevent.html', form=form)
@@ -60,7 +72,7 @@ def account():
         mail=updateform.email.data
         number=updateform.phnumber.data
         pwd = generate_password_hash(updateform.password.data)
-        
+
         # new_user = User(username=uname, pwhash=pwd, email=mail, phnumber=number)
         thisuser = User.query.filter_by(id=f'{current_user.id}').first()
         thisuser.username = uname
@@ -79,17 +91,17 @@ def account():
 def eventdetails(eventid):
     #attempt to find event in the database
     event = Event.query.filter_by(id=eventid).first()
-    
+
     if type(event) == Event:
         owner = User.query.filter_by(id=event.ownerid).first()
         if(owner != current_user):
             return render_template('eventdetails.html')
-        return render_template('eventdetails.html',imgurl=event.imgurl, 
+        return render_template('eventdetails.html',imgurl=event.imgurl,
+                                                   category = event.category,
                                                    title=event.title,
                                                    description=event.description,
                                                    status=event.status,
                                                    datetime=event.datetime,
-                                                   speaker=event.speaker,
                                                    creator=f"@{owner.username}",
                                                    tickets=event.tickets,
                                                    ticketprice=event.price)
