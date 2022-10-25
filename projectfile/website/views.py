@@ -94,12 +94,15 @@ def eventdetails(eventid):
 
     if type(event) == Event:
         owner = User.query.filter_by(id=event.ownerid).first()
+        # if(owner != current_user):
+        #     return render_template('eventdetails.html')
         return render_template('eventdetails.html',imgurl=event.imgurl,
                                                    category = event.category,
                                                    title=event.title,
                                                    description=event.description,
                                                    status=event.status,
                                                    datetime=event.datetime,
+                                                #    creator=f"@{owner.username}",
                                                    tickets=event.tickets,
                                                    ticketprice=event.price)
 
