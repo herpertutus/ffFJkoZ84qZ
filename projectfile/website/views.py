@@ -94,38 +94,17 @@ def eventdetails(eventid):
 
     if type(event) == Event:
         owner = User.query.filter_by(id=event.ownerid).first()
-        if(owner != current_user):
-            return render_template('eventdetails.html')
+        # if(owner != current_user):
+        #     return render_template('eventdetails.html')
         return render_template('eventdetails.html',imgurl=event.imgurl,
                                                    category = event.category,
                                                    title=event.title,
                                                    description=event.description,
                                                    status=event.status,
                                                    datetime=event.datetime,
-                                                   creator=f"@{owner.username}",
+                                                #    creator=f"@{owner.username}",
                                                    tickets=event.tickets,
                                                    ticketprice=event.price)
-        
-        
-@bp.route('/purchase/<eventid>', methods = ['GET', 'POST'])
-def purchase(eventid):
-    #attempt to find event in the database
-    event = Event.query.filter_by(id=eventid).first()
-    
-    if type(event) == Event:
-        owner = User.query.filter_by(id=event.ownerid).first()
-        if(owner != current_user):
-            return render_template('purchase.html')
-        return render_template('purchase.html',imgurl=event.imgurl, 
-                                                   title=event.title,
-                                                   description=event.description,
-                                                   status=event.status,
-                                                   datetime=event.datetime,
-                                                   speaker=event.speaker,
-                                                   creator=f"@{owner.username}",
-                                                   tickets=event.tickets,
-                                                   ticketprice=event.price)
-
 
 
 
