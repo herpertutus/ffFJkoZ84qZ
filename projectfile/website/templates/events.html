@@ -49,7 +49,11 @@
         <h3 class="eventcardh3">Math talks</h3>
           {% for event in events %}
             {% if event.category == "mathcategory" and event.status != "Unpublished"%}
-              {{event.title}}
+            <div class="row">
+              <div class="col mt-3">
+                {{event.title}}
+              </div>
+            </div>
             {% endif %}
           {% endfor %}
 
@@ -61,8 +65,12 @@
       <div class="card card-body EventContainer">
         <h3>Science talks</h3>
           {% for event in events %}
-            {% if event.category == "sciencecategory" %}
-              {{event.title}}
+            {% if event.category == "sciencecategory" and event.status != "Unpublished"%}
+              <div class="row">
+                <div class="col mt-3">
+                  {{event.title}}
+                </div>
+              </div>
               {% endif %}
           {% endfor %}
         <hr>
@@ -73,8 +81,12 @@
       <div class="card card-body EventContainer">
         <h3>Technology talks</h3>
           {% for event in events %}
-            {% if event.category == "technologycategory" %}
-              {{event.title}}
+            {% if event.category == "technologycategory" and event.status != "Unpublished"%}
+              <div class="row">
+                <div class="col mt-3">
+                  {{event.title}}
+                </div>
+              </div>
             {% endif %}
           {% endfor %}
         <hr>
@@ -85,8 +97,12 @@
       <div class="card card-body EventContainer">
         <h3>Social studies talks</h3>
           {% for event in events %}
-            {% if event.category == "socialcategory" %}
-              {{event.title}}
+            {% if event.category == "socialcategory" and event.status != "Unpublished"%}
+              <div class="row">
+                <div class="col mt-3">
+                  {{event.title}}
+                </div>
+              </div>
             {% endif %}
           {% endfor %}
         <hr>
@@ -97,8 +113,12 @@
       <div class="card card-body EventContainer">
         <h3>Business talks</h3>
           {% for event in events %}
-            {% if event.category == "businesscategory" %}
-              {{event.title}}
+            {% if event.category == "businesscategory" and event.status != "Unpublished"%}
+              <div class="row">
+                <div class="col mt-3">
+                  {{event.title}}
+                </div>
+              </div>
             {% endif %}
           {% endfor %}
         <hr>

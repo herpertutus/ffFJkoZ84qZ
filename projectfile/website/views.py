@@ -87,7 +87,7 @@ def account():
     return render_template('account.html', updateform=updateform, bookings=bookings)
 
 
-@bp.route('/event/<eventid>', methods = ['GET', 'POST'])
+@bp.route('/events/<eventid>', methods = ['GET', 'POST'])
 def eventdetails(eventid):
     #attempt to find event in the database
     event = Event.query.filter_by(id=eventid).first()
@@ -102,7 +102,7 @@ def eventdetails(eventid):
                                                    description=event.description,
                                                    status=event.status,
                                                    datetime=event.datetime,
-                                                #    creator=f"@{owner.username}",
+                                                   creator=f"@{owner.username}",
                                                    tickets=event.tickets,
                                                    ticketprice=event.price)
 
