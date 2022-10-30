@@ -31,6 +31,7 @@ class RegisterForm(FlaskForm):
 
 class CreateEventForm(FlaskForm):
     name = StringField("Event Name", validators=[InputRequired()])
+    speaker = StringField("Event Speaker", validators=[InputRequired()])
     tickets = IntegerField("Available Tickets", validators=[InputRequired()])
     price = IntegerField("Ticket Price", validators=[InputRequired()])
     category = SelectField("Event Category", choices=[('mathcategory','math'), ('sciencecategory','science'), ('technologycategory','technology'), ('socialcategory','social'), ('businesscategory','business')], validators=[InputRequired()])

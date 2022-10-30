@@ -38,12 +38,15 @@ def createEvent():
         eventImage = form.image.data
         eventTickets = form.tickets.data
         eventPrice = form.price.data
+        eventSpeaker = form.speaker.data
         eventStatus = form.status.data
 
-        new_event = Event(imgurl = eventImage,
+        new_event = Event(ownerid = current_user.id,
+                          imgurl = eventImage,
                           category = eventCategory,
                           title = eventName,
                           description = eventDescription,
+                          speaker = eventSpeaker,
                           status = eventStatus,
                           datetime = eventDate,
                           tickets = eventTickets,
@@ -98,6 +101,7 @@ def eventdetails(eventid):
         #     return render_template('eventdetails.html')
         return render_template('eventdetails.html',imgurl=event.imgurl,
                                                    category = event.category,
+                                                   speaker = event.speaker,
                                                    title=event.title,
                                                    description=event.description,
                                                    status=event.status,

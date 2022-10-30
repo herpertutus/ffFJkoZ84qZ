@@ -33,6 +33,7 @@ class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     status = db.Column(db.String(20), nullable=False, default='Unpublished')
     datetime = db.Column(db.String(30), index=True)
+    speaker = db.Column(db.String(40), index=True)
     ownerid = db.Column(db.Integer)
     tickets = db.Column(db.Integer)
     price = db.Column(db.Integer)
