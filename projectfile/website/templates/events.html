@@ -51,7 +51,7 @@
             {% if event.category == "mathcategory" and event.status != "Unpublished"%}
             <div class="row">
               <div class="col mt-3">
-                {{event.title}}
+                <a class="alink" href="/events/{{event.id}}">{{event.title}}</a>
               </div>
             </div>
             {% endif %}
@@ -68,7 +68,7 @@
             {% if event.category == "sciencecategory" and event.status != "Unpublished"%}
               <div class="row">
                 <div class="col mt-3">
-                  {{event.title}}
+                  <a class="alink" href="/events/{{event.id}}">{{event.title}}</a>
                 </div>
               </div>
               {% endif %}
@@ -84,7 +84,7 @@
             {% if event.category == "technologycategory" and event.status != "Unpublished"%}
               <div class="row">
                 <div class="col mt-3">
-                  {{event.title}}
+                  <a class="alink" href="/events/{{event.id}}">{{event.title}}</a>
                 </div>
               </div>
             {% endif %}
@@ -100,7 +100,7 @@
             {% if event.category == "socialcategory" and event.status != "Unpublished"%}
               <div class="row">
                 <div class="col mt-3">
-                  {{event.title}}
+                  <a class="alink" href="/events/{{event.id}}">{{event.title}}</a>
                 </div>
               </div>
             {% endif %}
@@ -116,7 +116,7 @@
             {% if event.category == "businesscategory" and event.status != "Unpublished"%}
               <div class="row">
                 <div class="col mt-3">
-                  {{event.title}}
+                  <a class="alink" href="/events/{{event.id}}">{{event.title}}</a>
                 </div>
               </div>
             {% endif %}

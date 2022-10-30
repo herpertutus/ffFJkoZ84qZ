@@ -35,7 +35,7 @@ class CreateEventForm(FlaskForm):
     tickets = IntegerField("Available Tickets", validators=[InputRequired()])
     price = IntegerField("Ticket Price", validators=[InputRequired()])
     category = SelectField("Event Category", choices=[('mathcategory','math'), ('sciencecategory','science'), ('technologycategory','technology'), ('socialcategory','social'), ('businesscategory','business')], validators=[InputRequired()])
-    status = SelectField("Event Category", choices=[('Unpublished'), ('Available'), ('Closed')], validators=[InputRequired()])
+    status = SelectField("Event Category", choices=[('Unpublished'), ('Open'), ('Closed')], validators=[InputRequired()])
     description = TextAreaField("Event Description", validators=[InputRequired(), Length(min=0, max= 200, message="description is too long")])
     date = StringField("Event Date", validators=[InputRequired()])
     image = StringField("Event Image URL", [InputRequired()])

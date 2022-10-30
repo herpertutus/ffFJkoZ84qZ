@@ -12,7 +12,7 @@
           <h1 class="card-title">All it takes is one idea</h1>
           <p class="card-text">Discover a world of events from our star lineup of self help gurus here at Better Events™</p>
           <a href="#discoverhr" class="btn ">Discover Better Events</a>
-        </div> 
+        </div>
       </div>
     </div>
   </div>
@@ -72,71 +72,112 @@
       <p class="catp">
         <a class="btn btn-primary" data-bs-toggle="collapse" href="#mathcategory" role="button" aria-expanded="false" aria-controls="mathcategory">
           math
-        </a>   
+        </a>
       </p>
       <p class="catp">
         <a class="btn btn-primary" data-bs-toggle="collapse" href="#sciencecategory" role="button" aria-expanded="false" aria-controls="sciencecategory">
           science
-        </a>   
+        </a>
       </p>
       <p class="catp">
         <a class="btn btn-primary" data-bs-toggle="collapse" href="#technologycategory" role="button" aria-expanded="false" aria-controls="technologycategory">
           technology
-        </a>   
+        </a>
       </p>
       <p class="catp">
         <a class="btn btn-primary" data-bs-toggle="collapse" href="#socialcategory" type="button" aria-expanded="false" aria-controls="socialcategory">
           social
-        </a>   
+        </a>
       </p>
       <p class="catp">
         <a class="btn btn-primary" data-bs-toggle="collapse" href="#businesscategory" role="button" aria-expanded="false" aria-controls="businesscategory">
           business
-        </a>   
+        </a>
       </p>
     </div>
-    
-    
+
+
 
     <!-- math category -->
     <div class="collapse multi-collapse container" id="mathcategory">
       <div class=" card card-body EventContainer">
         <h3 class="eventcardh3">Math talks</h3>
-        None available right now
+          {% for event in events %}
+            {% if event.category == "mathcategory" and event.status != "Unpublished"%}
+            <div class="row">
+              <div class="col mt-3">
+                <a class="alink" href="/events/{{event.id}}">{{event.title}}</a>
+              </div>
+            </div>
+            {% endif %}
+          {% endfor %}
+
         <hr>
-      </div>    
+      </div>
     </div>
     <!-- science category -->
     <div class="collapse multi-collapse container" id="sciencecategory">
       <div class="card card-body EventContainer">
         <h3>Science talks</h3>
-        None available right now
+          {% for event in events %}
+            {% if event.category == "sciencecategory" and event.status != "Unpublished"%}
+              <div class="row">
+                <div class="col mt-3">
+                  <a class="alink" href="/events/{{event.id}}">{{event.title}}</a>
+                </div>
+              </div>
+              {% endif %}
+          {% endfor %}
         <hr>
-      </div>    
+      </div>
     </div>
     <!-- technology category -->
     <div class="collapse multi-collapse container" id="technologycategory">
       <div class="card card-body EventContainer">
         <h3>Technology talks</h3>
-        None available right now
+          {% for event in events %}
+            {% if event.category == "technologycategory" and event.status != "Unpublished"%}
+              <div class="row">
+                <div class="col mt-3">
+                  <a class="alink" href="/events/{{event.id}}">{{event.title}}</a>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
         <hr>
-      </div>    
+      </div>
     </div>
     <!-- social category -->
     <div class="collapse multi-collapse container" id="socialcategory">
       <div class="card card-body EventContainer">
         <h3>Social studies talks</h3>
-        None available right now
+          {% for event in events %}
+            {% if event.category == "socialcategory" and event.status != "Unpublished"%}
+              <div class="row">
+                <div class="col mt-3">
+                  <a class="alink" href="/events/{{event.id}}">{{event.title}}</a>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
         <hr>
-      </div>    
+      </div>
     </div>
     <!-- business category -->
     <div class="collapse multi-collapse container" id="businesscategory">
       <div class="card card-body EventContainer">
         <h3>Business talks</h3>
-        None available right now
+          {% for event in events %}
+            {% if event.category == "businesscategory" and event.status != "Unpublished"%}
+              <div class="row">
+                <div class="col mt-3">
+                  <a class="alink" href="/events/{{event.id}}">{{event.title}}</a>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
         <hr>
-      </div>    
+      </div>
     </div>
 
 
@@ -146,7 +187,7 @@
     <div>
       <h2 class="spacertxt">Today's pick</h2>
     </div>
-    
+
 
 
 

@@ -59,16 +59,52 @@
 
     <br>
     <div>
+      <h5 class="spacertxt">User Events</h5>
+    </div>
+    <div class="linelogo">
+      <div class="logo line"></div>
+    </div>
+
+    {% if events|length > 0 %}
+    <div class="container orderhistorycard">
+        <div class=" card card-body EventContainer">
+            {% for event in events %}
+            <div class="card mb-3 smolevent" >
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src={{event.imgurl}} class="img-fluid smoleventimg" alt="...">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-body smolcardbody">
+                        <h5 class="card-title">{{event.title}}</h5>
+                        <p class="card-text"><small class="text-muted">Event ID: #{{event.id}}</small></p>
+                        <p class="card-text"><small class="text-muted">Date : {{event.date}}</small></p>
+                        <p class="card-text"><small class="text-muted">Number of tickets: {{event.tickets}}</small></p>
+                        <p class="card-text"><small class="text-muted">Price Pre Ticket: {{event.price}}</small></p>
+                        <a class="alink" href="/events/{{event.id}}">Edit Event</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <br>
+    <div>
       <h5 class="spacertxt">Order History</h5>
     </div>
     <div class="linelogo">
       <div class="logo line"></div>
     </div>
+
+
     <!-- bookings loop -->
     {% if bookings|length > 0 %}
     <div class="container orderhistorycard">
         <div class=" card card-body EventContainer">
-            {% for booking in bookings %}  
+            {% for booking in bookings %}
             <div class="card mb-3 smolevent" >
                 <div class="row g-0">
                     <div class="col-md-4">
@@ -82,13 +118,13 @@
                         <p class="card-text"><small class="text-muted">Number of tickets: {{booking.qty}}</small></p>
                         <p class="card-text"><small class="text-muted">Price Pre Ticket: {{booking.ticketprice}}</small></p>
                         <p class="card-text"><small class="text-muted">Total: {{booking.ticketprice * booking.qty}}</small></p>
-                        <a class="alink" href="/event/{{booking.eventid}}">View Event Page</a>
+                        <a class="alink" href="/events/{{booking.eventid}}">View Event Page</a>
                         </div>
                     </div>
                 </div>
             </div>
             {% endfor %}
-        </div>    
+        </div>
     </div>
     {% endif %}
 

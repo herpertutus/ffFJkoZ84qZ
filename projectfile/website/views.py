@@ -18,7 +18,8 @@ bp = Blueprint('main', __name__)
 
 @bp.route('/')
 def index():
-    return render_template('index.html')
+    events = Event.query.all()
+    return render_template('index.html', events = events)
 
 @bp.route('/events')
 def allevents():
@@ -65,6 +66,7 @@ def contact():
 def account():
     updateform = RegisterForm()
     bookings = Booking.query.filter_by(userid=current_user.id).all()
+    events = Event.query.filter_by(ownerid = current_user.id).all()
     print(f"---{bookings}---")
 
     if updateform.validate_on_submit():
@@ -87,7 +89,7 @@ def account():
         flash("Updated info successfully")
         return redirect(url_for('main.account'))
 
-    return render_template('account.html', updateform=updateform, bookings=bookings)
+    return render_template('account.html', updateform=updateform, bookings=bookings, events = events)
 
 
 @bp.route('/events/<eventid>', methods = ['GET', 'POST'])
