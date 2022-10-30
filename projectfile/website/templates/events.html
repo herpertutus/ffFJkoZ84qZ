@@ -48,7 +48,11 @@
     <div class="collapse multi-collapse container" id="mathcategory">
       <div class=" card card-body EventContainer">
         <h3 class="eventcardh3">Math talks</h3>
-        None available right now
+          {% for event in events %}
+            {% if event.category == "mathcategory" %}
+              {{event.title}}
+            {% endif %}
+          {% endfor %}
         <hr>
       </div>
     </div>
@@ -56,7 +60,11 @@
     <div class="collapse multi-collapse container" id="sciencecategory">
       <div class="card card-body EventContainer">
         <h3>Science talks</h3>
-        None available right now
+          {% for event in events %}
+            {% if event.category == "sciencecategory" %}
+              {{event.title}}
+            {% endif %}
+          {% endfor %}
         <hr>
       </div>
     </div>
@@ -64,7 +72,11 @@
     <div class="collapse multi-collapse container" id="technologycategory">
       <div class="card card-body EventContainer">
         <h3>Technology talks</h3>
-        None available right now
+          {% for event in events %}
+            {% if event.category == "technologycategory" %}
+              {{event.title}}
+            {% endif %}
+          {% endfor %}
         <hr>
       </div>
     </div>
@@ -72,7 +84,11 @@
     <div class="collapse multi-collapse container" id="socialcategory">
       <div class="card card-body EventContainer">
         <h3>Social studies talks</h3>
-        None available right now
+          {% for event in events %}
+            {% if event.category == "socialcategory" %}
+              {{event.title}}
+            {% endif %}
+          {% endfor %}
         <hr>
       </div>
     </div>
@@ -80,7 +96,11 @@
     <div class="collapse multi-collapse container" id="businesscategory">
       <div class="card card-body EventContainer">
         <h3>Business talks</h3>
-        None available right now
+          {% for event in events %}
+            {% if event.category == "businesscategory" %}
+              {{event.title}}
+            {% endif %}
+          {% endfor %}
         <hr>
       </div>
     </div>
