@@ -126,20 +126,33 @@ def eventdetails(eventid):
 @bp.route('/purchase/<eventid>', methods=['GET', 'POST'])
 @login_required
 def purchase(eventid):
+    # attempt to find event in the database
     event = Event.query.filter_by(id=eventid).first()
-
-
     purchaseform = PurchaseForm()
 
-    if purchaseform.validate_on_submit():
-        purchasedTickets = purchaseform.tickets.data
-
-        new_booking = Booking(userid=current_user.id,
-                            tickets=purchasedTickets)
-        db.session.add(new_booking)
-        db.session.commit()
-        print('tickets succesfully purchased')
-        return redirect(url_for('main.allevents'))
-    return render_template('account.html')
+    if type(event) == Booking:
+        owner = User.query.filter_by(id=event.ownerid).first()
+        return render_template('purchase.html', imgurl=event.imgurl,
+                               title=event.title,
+                               description=event.description,
+                               status=event.status,
+                               datetime=event.datetime,
+                               speaker=event.speaker,
+                               creator=f"@{owner.username}",
+                               tickets=event.tickets,
+                               ticketprice=event.price,
+                               form=purchaseform)
 
     return render_template('purchase.html', form=purchaseform)
+
+def createPurchase():
+    purchaseform = PurchaseForm()
+    if purchaseform.validate_on_submit():
+        purchedTix = purchaseform.tickets.data
+
+        new_purchase = Booking(userid=current_user.id,
+                            qtyTix=purchedTix)
+        db.session.add(new_purchase)
+        db.session.commit()
+    return render_template('purchase.html', form=purchaseform)
+        

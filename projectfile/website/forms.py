@@ -42,5 +42,5 @@ class CreateEventForm(FlaskForm):
     submit = SubmitField("Submit")
 
 class PurchaseForm(FlaskForm):
-    tickets = IntegerField("Ticket Quantity", validators=[InputRequired()])
+    tickets = IntegerField("Ticket Purchase Quantity", validators=[InputRequired()])
     submit = SubmitField("Submit")
