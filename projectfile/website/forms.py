@@ -40,3 +40,7 @@ class CreateEventForm(FlaskForm):
     date = StringField("Event Date", validators=[InputRequired()])
     image = StringField("Event Image URL", [InputRequired()])
     submit = SubmitField("Submit")
+
+class PurchaseForm(FlaskForm):
+    tickets = IntegerField("Ticket Quantity", validators=[InputRequired()])
+    submit = SubmitField("Submit")

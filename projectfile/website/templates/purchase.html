@@ -5,18 +5,22 @@
 
 <hr>
 <div class="container">
-    <div class="row">
-        <div class="col">
-            <div class="container" style="width: 50%">
-                <img src="https://ca-times.brightspotcdn.com/dims4/default/7d9286c/2147483647/strip/true/crop/2662x4000+0+0/resize/1200x1803!/quality/80/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2F06%2F10%2Ff4afc21d481f977446b76eac8839%2Fby-luis-panch-perez.jpg" {{imgurl}} class="img-thumbnail" alt="...">
-            </div>
-        </div>
-        <div class="col">
-          <h4>{{title}}Tyler The Creator</h4>
-          <h4>{{ticketprice}}$250</h4>
-        </div>
+  <div class="row">
+    <div class="col">
+      <div class="container" style="width: 50%">
+        <img src={{imgurl}}>
+      </div>
+    </div>
+    <div class="col">
+      <h4>{{title}}</h4>
+      <h4>{{ticketprice}}</h4>
+      <h4>{{uname}}</h4>
+      <div>
+        {{wtf.quick_form(form)}}
+      </div>
+    </div>
   </div>
-</hr>
+  </hr>
 
 
 
@@ -25,4 +29,4 @@
 
 
 
-{% endblock %}
+  {% endblock %}

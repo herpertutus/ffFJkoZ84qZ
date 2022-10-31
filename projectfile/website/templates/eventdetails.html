@@ -2,83 +2,83 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% block content %}
 <hr>
- <!-- THE event -->
- <div>
-    <h2 class="spacertxt">Event details</h2>
-  </div>
+<!-- THE event -->
+<div>
+  <h2 class="spacertxt">Event details</h2>
+</div>
 
-  <div class="container card card-body EventContainer">
-    <div class="card mb-3 smolevent eventhero" >
-      <div class="row g-0">
-        <div class="col-md-12 col-lg-4">
-          <img src={{imgurl}} class="img-fluid eventheroimg" alt="...">
-        </div>
-        <div class="col-md-12 col-lg-8">
-          <div class="card-body smolcardbody">
-            <h5 class="card-title">{{title}}</h5>
-            <p class="card-text">{{creator}}</p>
-            <p class="card-text">{{speaker}}</p>
-            <p class="card-text">{{description}}</p>
-            <p class="card-text"><small class="text-muted">Status: {{status}}</small></p>
-            <p class="card-text"><small class="text-muted">Date/Time: {{datetime}}</small></p>
-            <p class="card-text"><small class="text-muted">Available Tickets: {{tickets}}</small></p>
-            <p class="card-text"><small class="text-muted">Ticket Price: {{ticketprice}}</small></p>
-            {% if current_user.is_authenticated %}
-                {% if status == "Open" and tickets >= 1 %}
-                <a href="" class="btn eventinfobut" data-bs-toggle="modal" data-bs-target="#exampleModal">Book Tickets</a>
-                {% else %}
-                <p class="card-text"><small class="">Bookings Not Available</small></p>
-                {% endif %}
-            {% else %}
-            <a href="/login" class="btn eventinfobut" >Sign In To make Bookings</a>
-            {% endif %}
-          </div>
+<div class="container card card-body EventContainer">
+  <div class="card mb-3 smolevent eventhero">
+    <div class="row g-0">
+      <div class="col-md-12 col-lg-4">
+        <img src={{imgurl}} class="img-fluid eventheroimg" alt="...">
+      </div>
+      <div class="col-md-12 col-lg-8">
+        <div class="card-body smolcardbody">
+          <h5 class="card-title">{{title}}</h5>
+          <p class="card-text">{{creator}}</p>
+          <p class="card-text">{{speaker}}</p>
+          <p class="card-text">{{description}}</p>
+          <p class="card-text"><small class="text-muted">Status: {{status}}</small></p>
+          <p class="card-text"><small class="text-muted">Date/Time: {{datetime}}</small></p>
+          <p class="card-text"><small class="text-muted">Available Tickets: {{tickets}}</small></p>
+          <p class="card-text"><small class="text-muted">Ticket Price: {{ticketprice}}</small></p>
+          {% if current_user.is_authenticated %}
+          {% if status == "Open" and tickets >= 1 %}
+          <a href="" class="btn eventinfobut" data-bs-toggle="modal" data-bs-target="#exampleModal">Book Tickets</a>
+          {% else %}
+          <p class="card-text"><small class="">Bookings Not Available</small></p>
+          {% endif %}
+          {% else %}
+          <a href="/login" class="btn eventinfobut">Sign In To make Bookings</a>
+          {% endif %}
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- booking modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="ModalLabel">Booking Information</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
+<!-- booking modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalLabel">Booking Information</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
 
-          <div class="container card card-body EventContainersmol">
-            <div class="card mb-3" >
-              <div class="row g-0">
-                <!-- <div class="col-md-12 ">
+        <div class="container card card-body EventContainersmol">
+          <div class="card mb-3">
+            <div class="row g-0">
+              <!-- <div class="col-md-12 ">
                   <img src="https://images.unsplash.com/photo-1635070040809-d434392ae756?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" class="img-fluid eventheroimgsmol" alt="...">
                 </div> -->
-                <div class="col-md-12 col-lg-8">
-                  <div class="card-body smolcardbody">
-                    <h5 class="card-title">{{title}}</h5>
-                    <p class="card-text"><small class="text-muted">Status: {{status}}</small></p>
-                    <p class="card-text"><small class="text-muted">Date/Time: {{datetime}}</small></p>
-                    <p class="card-text"><small class="text-muted">Creator: {{creator}}</small></p>
-                    <p class="card-text"><small class="text-muted">Available Tickets: {{tickets}}</small></p>
-                    <p class="card-text"><small class="text-muted">Ticket Price: {{ticketprice}}</small></p>
-                  </div>
+              <div class="col-md-12 col-lg-8">
+                <div class="card-body smolcardbody">
+                  <h5 class="card-title">{{title}}</h5>
+                  <p class="card-text"><small class="text-muted">Status: {{status}}</small></p>
+                  <p class="card-text"><small class="text-muted">Date/Time: {{datetime}}</small></p>
+                  <p class="card-text"><small class="text-muted">Creator: {{creator}}</small></p>
+                  <p class="card-text"><small class="text-muted">Available Tickets: {{tickets}}</small></p>
+                  <p class="card-text"><small class="text-muted">Ticket Price: {{ticketprice}}</small></p>
+                  <p class="card-text"><small class="text-muted">evid: {{eventid}}</small></p>
                 </div>
               </div>
             </div>
           </div>
-          <div class="container EventContainersmol smolcardbody">
-            <label for="quantity">Number of tickets:</label>
-          <input type="number" id="quantity" name="quantity" min="1" max="124">
-          </div>
+        </div>
 
-        </div>
-        <div class="modal-footer smolcardbody">
-          <p class="card-text"><small class="text-muted">Account: @{{current_user.username}}</small></p>
-          <a href="" class="btn eventinfobut" data-bs-toggle="modal" data-bs-target="#exampleModal">Finalize Booking</a>
-        </div>
+
+      </div>
+      <div class="modal-footer smolcardbody">
+        <p class="card-text"><small class="text-muted">Account: @{{current_user.username}}</small></p>
+        
+        <a class="btn eventinfobut" href="/purchase/{{eventid}}">Finalize Booking</a>
+       
       </div>
     </div>
   </div>
+</div>
 
 {% endblock %}

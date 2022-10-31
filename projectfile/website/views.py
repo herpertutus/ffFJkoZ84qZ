@@ -1,16 +1,18 @@
 
+from cmath import log
 from datetime import datetime
+from functools import reduce
 import os
 from unicodedata import category
-from flask import Blueprint,render_template, redirect, url_for, request, flash
+from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_required, current_user
-from .forms import CreateEventForm, LoginForm,RegisterForm
-from werkzeug.security import generate_password_hash,check_password_hash
+from .forms import CreateEventForm, LoginForm, RegisterForm, PurchaseForm
+from werkzeug.security import generate_password_hash, check_password_hash
 
 from .models import User, Event, Comment, Booking
 from . import db
 
-#gonna need to import models as we make them dont forget lads
+# gonna need to import models as we make them dont forget lads
 
 
 bp = Blueprint('main', __name__)
@@ -19,19 +21,21 @@ bp = Blueprint('main', __name__)
 @bp.route('/')
 def index():
     events = Event.query.all()
-    return render_template('index.html', events = events)
+    return render_template('index.html', events=events)
+
 
 @bp.route('/events')
 def allevents():
     events = Event.query.all()
-    return render_template('events.html', events = events)
+    return render_template('events.html', events=events)
 
-@bp.route('/events/create', methods = ['GET', 'POST'])
+
+@bp.route('/events/create', methods=['GET', 'POST'])
 @login_required
 def createEvent():
     form = CreateEventForm()
     if form.validate_on_submit():
-        #event form values
+        # event form values
         eventName = form.name.data
         eventDescription = form.description.data
         eventDate = form.date.data
@@ -42,40 +46,42 @@ def createEvent():
         eventSpeaker = form.speaker.data
         eventStatus = form.status.data
 
-        new_event = Event(ownerid = current_user.id,
-                          imgurl = eventImage,
-                          category = eventCategory,
-                          title = eventName,
-                          description = eventDescription,
-                          speaker = eventSpeaker,
-                          status = eventStatus,
-                          datetime = eventDate,
-                          tickets = eventTickets,
-                          price = eventPrice)
+        new_event = Event(ownerid=current_user.id,
+                          imgurl=eventImage,
+                          category=eventCategory,
+                          title=eventName,
+                          description=eventDescription,
+                          speaker=eventSpeaker,
+                          status=eventStatus,
+                          datetime=eventDate,
+                          tickets=eventTickets,
+                          price=eventPrice)
         db.session.add(new_event)
         db.session.commit()
         print('event good')
         return redirect(url_for('main.allevents'))
     return render_template('createevent.html', form=form)
 
+
 @bp.route('/contact')
 def contact():
     return render_template('contact.html')
 
-@bp.route('/account', methods = ['GET', 'POST'])
+
+@bp.route('/account', methods=['GET', 'POST'])
 def account():
     updateform = RegisterForm()
     bookings = Booking.query.filter_by(userid=current_user.id).all()
-    events = Event.query.filter_by(ownerid = current_user.id).all()
+    events = Event.query.filter_by(ownerid=current_user.id).all()
     print(f"---{bookings}---")
 
     if updateform.validate_on_submit():
         # max = db.session.query(func.max(User.id)).first()
 
-        #get username, password and email from the form
-        uname =updateform.username.data
-        mail=updateform.email.data
-        number=updateform.phnumber.data
+        # get username, password and email from the form
+        uname = updateform.username.data
+        mail = updateform.email.data
+        number = updateform.phnumber.data
         pwd = generate_password_hash(updateform.password.data)
 
         # new_user = User(username=uname, pwhash=pwd, email=mail, phnumber=number)
@@ -89,32 +95,51 @@ def account():
         flash("Updated info successfully")
         return redirect(url_for('main.account'))
 
-    return render_template('account.html', updateform=updateform, bookings=bookings, events = events)
+    return render_template('account.html', updateform=updateform, bookings=bookings, events=events)
 
 
-@bp.route('/events/<eventid>', methods = ['GET', 'POST'])
+@bp.route('/events/<eventid>', methods=['GET', 'POST'])
 def eventdetails(eventid):
-    #attempt to find event in the database
+    # attempt to find event in the database
     event = Event.query.filter_by(id=eventid).first()
 
     if type(event) == Event:
         owner = User.query.filter_by(id=event.ownerid).first()
         # if(owner != current_user):
         #     return render_template('eventdetails.html')
-        return render_template('eventdetails.html',imgurl=event.imgurl,
-                                                   category = event.category,
-                                                   speaker = event.speaker,
-                                                   title=event.title,
-                                                   description=event.description,
-                                                   status=event.status,
-                                                   datetime=event.datetime,
-                                                   creator=f"@{owner.username}",
-                                                   tickets=event.tickets,
-                                                   ticketprice=event.price)
+        return render_template('eventdetails.html', imgurl=event.imgurl,
+                               category=event.category,
+                               speaker=event.speaker,
+                               title=event.title,
+                               description=event.description,
+                               status=event.status,
+                               datetime=event.datetime,
+                               creator=f"@{owner.username}",
+                               tickets=event.tickets,
+                               ticketprice=event.price,
+                               eventid=event.id)
 
-
-
-    #render some sort of an error, no event found
+    # render some sort of an error, no event found
     return render_template('eventdetails.html')
 
 
+@bp.route('/purchase/<eventid>', methods=['GET', 'POST'])
+@login_required
+def purchase(eventid):
+    event = Event.query.filter_by(id=eventid).first()
+
+
+    purchaseform = PurchaseForm()
+
+    if purchaseform.validate_on_submit():
+        purchasedTickets = purchaseform.tickets.data
+
+        new_booking = Booking(userid=current_user.id,
+                            tickets=purchasedTickets)
+        db.session.add(new_booking)
+        db.session.commit()
+        print('tickets succesfully purchased')
+        return redirect(url_for('main.allevents'))
+    return render_template('account.html')
+
+    return render_template('purchase.html', form=purchaseform)
