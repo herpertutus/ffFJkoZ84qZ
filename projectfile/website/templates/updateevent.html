@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block content %}
+
+<div class="container">
+  <h1 class="spacertxt">Update Event Page</h1>
+
+  <div style="">
+    {{wtf.quick_form(form)}}
+  </div>
+</div>
+
+{% endblock %}

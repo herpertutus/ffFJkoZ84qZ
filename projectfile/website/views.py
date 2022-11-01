@@ -61,6 +61,25 @@ def createEvent():
         return redirect(url_for('main.allevents'))
     return render_template('createevent.html', form=form)
 
+@bp.route('/update/<eventid>', methods=['GET', 'POST'])
+@login_required
+def updateEvent(eventid):
+    events = Event.query.filter_by(id=eventid).first()
+    form = CreateEventForm()
+    if form.validate_on_submit():
+            # event form values
+            events.title = form.description.data
+            events.description = form.description.data
+            events.datetime = form.date.data
+            events.category = form.category.data
+            events.imgurl = form.image.data
+            events.ticket = form.tickets.data
+            events.price = form.price.data
+            events.speaker = form.speaker.data
+            events.status = form.status.data
+            db.session.commit()
+            return redirect(url_for('main.allevents'))
+    return render_template('updateevent.html', form = form)
 
 @bp.route('/contact')
 def contact():
@@ -154,4 +173,3 @@ def purchase(eventid):
                                ticketprice=event.price)
 
 
-        
