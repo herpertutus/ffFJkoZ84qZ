@@ -1,4 +1,3 @@
-
 from cmath import log
 from datetime import datetime
 from functools import reduce
@@ -129,30 +128,30 @@ def purchase(eventid):
     # attempt to find event in the database
     event = Event.query.filter_by(id=eventid).first()
     purchaseform = PurchaseForm()
+    if purchaseform.validate_on_submit():
+        purchedTix = purchaseform.tickets.data
 
-    if type(event) == Booking:
-        owner = User.query.filter_by(id=event.ownerid).first()
-        return render_template('purchase.html', imgurl=event.imgurl,
+        new_purchase = Booking(userid=current_user.id,
+                               eventid=eventid,
+                               ticketprice=event.price,
+                               qty=purchedTix,
+                               date=event.datetime,
+                               imgurl=event.imgurl,
+                               title=event.title)
+        db.session.add(new_purchase)
+        db.session.commit()
+        return redirect(url_for('main.account'))
+
+
+
+    return render_template('purchase.html', form=purchaseform, imgurl=event.imgurl,
                                title=event.title,
                                description=event.description,
                                status=event.status,
                                datetime=event.datetime,
                                speaker=event.speaker,
-                               creator=f"@{owner.username}",
                                tickets=event.tickets,
-                               ticketprice=event.price,
-                               form=purchaseform)
+                               ticketprice=event.price)
 
-    return render_template('purchase.html', form=purchaseform)
 
-def createPurchase():
-    purchaseform = PurchaseForm()
-    if purchaseform.validate_on_submit():
-        purchedTix = purchaseform.tickets.data
-
-        new_purchase = Booking(userid=current_user.id,
-                            qtyTix=purchedTix)
-        db.session.add(new_purchase)
-        db.session.commit()
-    return render_template('purchase.html', form=purchaseform)
         
