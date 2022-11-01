@@ -2,6 +2,7 @@ from cmath import log
 from datetime import datetime
 from functools import reduce
 import os
+import this
 from unicodedata import category
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_required, current_user
@@ -150,7 +151,7 @@ def purchase(eventid):
     booked = False
     if purchaseform.validate_on_submit():
         purchedTix = purchaseform.tickets.data
-        existingTix = event.tickets
+        existingTix = event.tickets #change this bih
         
         if purchedTix > existingTix:
             flash("Tickets not available for chosen quantity")
@@ -164,32 +165,34 @@ def purchase(eventid):
                                imgurl=event.imgurl,
                                title=event.title)
         
+        finalTix =  existingTix - purchedTix
         
-        
-        updateTix = Event(tickets=updatedTix,
-                          )
-        
-        
-        db.session.add(new_purchase,updateTix)
+        thisevent = Event.query.filter_by(id=f'{eventid}').first()
+        thisevent.tickets = finalTix
+
+        if finalTix == 0:
+            thisevent.status = "Booked Out"
+
+        db.session.add(new_purchase)
         db.session.commit()
+        print("---------------------------------------------------" + str(finalTix) + "--------------------------------------------------")
         
         
         
         if(booked == False):
-            flash("Booking Succesful, your order number is: " + bookings.id)
+            flash("Booking Succesful, your order number is: " + eventid)
         return redirect(url_for('main.account'))
 
 
         
     
 
-    return render_template('purchase.html', form=purchaseform, imgurl=event.imgurl,
-                               title=event.title,
-                               description=event.description,
-                               status=event.status,
-                               datetime=event.datetime,
-                               speaker=event.speaker,
-                               tickets=event.tickets,
-                               ticketprice=event.price)
-
-
+    return render_template('purchase.html', 
+                            form=purchaseform,imgurl=event.imgurl,
+                            title=event.title,
+                            description=event.description,
+                            status=event.status,
+                            datetime=event.datetime,
+                            speaker=event.speaker,
+                            tickets=event.tickets,
+                            ticketprice=event.price)
