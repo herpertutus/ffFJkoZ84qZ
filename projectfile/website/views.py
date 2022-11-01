@@ -140,16 +140,22 @@ def eventdetails(eventid):
     # render some sort of an error, no event found
     return render_template('eventdetails.html')
 
-
 @bp.route('/purchase/<eventid>', methods=['GET', 'POST'])
 @login_required
 def purchase(eventid):
     # attempt to find event in the database
     event = Event.query.filter_by(id=eventid).first()
     purchaseform = PurchaseForm()
+    booked = False
     if purchaseform.validate_on_submit():
         purchedTix = purchaseform.tickets.data
+        existingTix = event.tickets
+        
+        if purchedTix > existingTix:
+            flash("Tickets not available for chosen quantity")
+            booked = True
 
+        
         new_purchase = Booking(userid=current_user.id,
                                eventid=eventid,
                                ticketprice=event.price,
@@ -159,10 +165,9 @@ def purchase(eventid):
                                title=event.title)
         db.session.add(new_purchase)
         db.session.commit()
-        flash("Updated info successfully")
+        if(booked == False):
+            flash("Booking Succesful, your order number is: " + eventid)
         return redirect(url_for('main.account'))
-
-
 
     return render_template('purchase.html', form=purchaseform, imgurl=event.imgurl,
                                title=event.title,
