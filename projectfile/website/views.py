@@ -159,6 +159,7 @@ def purchase(eventid):
                                title=event.title)
         db.session.add(new_purchase)
         db.session.commit()
+        flash("Updated info successfully")
         return redirect(url_for('main.account'))
 
 
