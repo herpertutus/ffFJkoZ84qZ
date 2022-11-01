@@ -68,7 +68,7 @@ def updateEvent(eventid):
     form = CreateEventForm()
     if form.validate_on_submit():
             # event form values
-            events.title = form.description.data
+            events.title = form.name.data
             events.description = form.description.data
             events.datetime = form.date.data
             events.category = form.category.data
@@ -145,6 +145,7 @@ def eventdetails(eventid):
 def purchase(eventid):
     # attempt to find event in the database
     event = Event.query.filter_by(id=eventid).first()
+    bookings = Booking.query.filter_by(userid=current_user.id).all()
     purchaseform = PurchaseForm()
     booked = False
     if purchaseform.validate_on_submit():
@@ -155,7 +156,6 @@ def purchase(eventid):
             flash("Tickets not available for chosen quantity")
             booked = True
 
-        
         new_purchase = Booking(userid=current_user.id,
                                eventid=eventid,
                                ticketprice=event.price,
@@ -163,11 +163,25 @@ def purchase(eventid):
                                date=event.datetime,
                                imgurl=event.imgurl,
                                title=event.title)
-        db.session.add(new_purchase)
+        
+        
+        
+        updateTix = Event(tickets=updatedTix,
+                          )
+        
+        
+        db.session.add(new_purchase,updateTix)
         db.session.commit()
+        
+        
+        
         if(booked == False):
-            flash("Booking Succesful, your order number is: " + eventid)
+            flash("Booking Succesful, your order number is: " + bookings.id)
         return redirect(url_for('main.account'))
+
+
+        
+    
 
     return render_template('purchase.html', form=purchaseform, imgurl=event.imgurl,
                                title=event.title,
