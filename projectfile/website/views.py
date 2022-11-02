@@ -181,7 +181,13 @@ def purchase(eventid):
             db.session.add(new_purchase)
             db.session.commit()
             flash("Tickets Purchased Succesfuly, Refer to your order below")
+            return redirect(url_for('main.account'))
+        else:
+            flash("Order quantity higher than available tickets")
         return redirect(url_for('main.account'))
+    
+
+
 
 
         
