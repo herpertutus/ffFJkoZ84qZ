@@ -1,4 +1,5 @@
 from cmath import log
+
 from datetime import datetime
 from functools import reduce
 import os
@@ -146,7 +147,7 @@ def eventdetails(eventid):
 def purchase(eventid):
     # attempt to find event in the database
     event = Event.query.filter_by(id=eventid).first()
-    bookings = Booking.query.filter_by(userid=current_user.id).all()
+   
     purchaseform = PurchaseForm()
     booked = False
     if purchaseform.validate_on_submit():
@@ -154,7 +155,8 @@ def purchase(eventid):
         existingTix = event.tickets 
         
         if purchedTix > existingTix:
-            flash("Tickets not available for chosen quantity")
+            
+            
             booked = True
 
         new_purchase = Booking(userid=current_user.id,
@@ -173,11 +175,12 @@ def purchase(eventid):
 
         if finalTix == 0:
             thisevent.status = "Booked Out"
+            
                     
         if booked == False:
             db.session.add(new_purchase)
             db.session.commit()
-            return redirect(url_for('main.purchaseconfirmation', [bookingid]))
+            flash("Tickets Purchased Succesfuly, Refer to your order below")
         return redirect(url_for('main.account'))
 
 
@@ -193,18 +196,10 @@ def purchase(eventid):
                             speaker=event.speaker,
                             tickets=event.tickets,
                             ticketprice=event.price)
+
+
+
+
+
     
-@bp.route('/confirmation/<bookingid>', methods=['GET', 'POST'])
-@login_required
-def purchaseconfirmation(bookingid):
-    # attempt to find event in the database
-    bookingCon = Booking.query.filter_by(id=bookingid).first()
     
-    return render_template('confirmation.html', 
-                            imgurl=bookingCon.imgurl,
-                            title=bookingCon.title,
-                            datetime=bookingCon.date,
-                            tickets=bookingCon.qty,
-                            ticketprice=bookingCon.ticketprice,
-                            bookid=bookingCon.id,
-                            )
