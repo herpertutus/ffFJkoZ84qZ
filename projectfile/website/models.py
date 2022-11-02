@@ -53,6 +53,7 @@ class Comment(db.Model):
     content = db.Column(db.String(550), index=True)
     date = db.Column(db.String(30), index=True)
     eventid = db.Column(db.Integer)
+    commenttitle = db.Column(db.String(100), index = True)
 
     def __repr__(self):
         return f"<id: {self.id}, commentername: {self.commentername}>"

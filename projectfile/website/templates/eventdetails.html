@@ -80,4 +80,37 @@
   </div>
 </div>
 
+
+<!-- Commenting -->
+<div>
+  <h2 class="spacertxt">User Reviews</h2>
+</div>
+
+<div class="container card comment">
+  <div class="card-body">
+    <h5 class="card-title">{{commenttitle}}</h5>
+    <hr>
+    <p class="card-text">{{content}}</p>
+    <p class="card-text"><small class="text-muted">Posted: {{date}}</small></p>
+    <p class="card-text"><small class="text-muted">By: {{commentername}}</small></p>
+  </div>
+</div>
+
+<div>
+  <h2 class="spacertxt">Write a Review</h2>
+</div>
+
+<div class="container card comment newcomment">
+  <div class="mb-3 commentinputs">
+    <br>
+    <input type="text" class="form-control commenttitle" id="commenttitleinput" placeholder="Title">
+  </div>
+  <div class="mb-3 commentinputs">
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" cols="50" placeholder="Comment"></textarea>
+  </div>
+  <a href="#" class="btn eventinfobut">Post Comment</a>
+</div>
+
+
+
 {% endblock %}

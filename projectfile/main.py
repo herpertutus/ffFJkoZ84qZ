@@ -11,3 +11,4 @@ from flask import Blueprint,render_template, redirect, url_for, request, flash
 @napp.errorhandler(404)
 def internal_error(error):
     return render_template('<h3>error</h3>')
+    
