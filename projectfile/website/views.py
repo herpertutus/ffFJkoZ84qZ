@@ -151,7 +151,7 @@ def purchase(eventid):
     booked = False
     if purchaseform.validate_on_submit():
         purchedTix = purchaseform.tickets.data
-        existingTix = event.tickets #change this bih
+        existingTix = event.tickets 
         
         if purchedTix > existingTix:
             flash("Tickets not available for chosen quantity")
@@ -163,7 +163,8 @@ def purchase(eventid):
                                qty=purchedTix,
                                date=event.datetime,
                                imgurl=event.imgurl,
-                               title=event.title)
+                               title=event.title,
+                               )
         
         finalTix =  existingTix - purchedTix
         
@@ -172,15 +173,11 @@ def purchase(eventid):
 
         if finalTix == 0:
             thisevent.status = "Booked Out"
-
-        db.session.add(new_purchase)
-        db.session.commit()
-        print("---------------------------------------------------" + str(finalTix) + "--------------------------------------------------")
-        
-        
-        
-        if(booked == False):
-            flash("Booking Succesful, your order number is: " + eventid)
+                    
+        if booked == False:
+            db.session.add(new_purchase)
+            db.session.commit()
+            return redirect(url_for('main.purchaseconfirmation', [bookingid]))
         return redirect(url_for('main.account'))
 
 
@@ -196,3 +193,18 @@ def purchase(eventid):
                             speaker=event.speaker,
                             tickets=event.tickets,
                             ticketprice=event.price)
+    
+@bp.route('/confirmation/<bookingid>', methods=['GET', 'POST'])
+@login_required
+def purchaseconfirmation(bookingid):
+    # attempt to find event in the database
+    bookingCon = Booking.query.filter_by(id=bookingid).first()
+    
+    return render_template('confirmation.html', 
+                            imgurl=bookingCon.imgurl,
+                            title=bookingCon.title,
+                            datetime=bookingCon.date,
+                            tickets=bookingCon.qty,
+                            ticketprice=bookingCon.ticketprice,
+                            bookid=bookingCon.id,
+                            )
