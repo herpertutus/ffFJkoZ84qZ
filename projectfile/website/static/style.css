@@ -231,8 +231,8 @@ div.collapse{
 .EventContainer{
     border: transparent;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: left;
+    align-items: left;
 }
 .EventContainersmol{
     border: transparent;
