@@ -1,0 +1,72 @@
+RR (9):
+      create create events form and template
+      create even login required functionality
+      added event form values from event form
+      fix events styling
+      fixed event ownerid and speaker
+      owned events by user now shows in account page
+      minor fixes to account.html
+      make events cards
+      fix max name in contacts
+
+Raphael-David (7):
+      create event functionality
+      fixed events category if statements
+      removed check owner/creator in event views to test events
+      commented owner check instead of deleting
+      update event functionality
+      contact page with our names
+      update contact page
+
+Seth (12):
+      added purchase view
+      booking history now working
+      succesful prompt in new purchase
+      user prompts
+      Merge branch 'main' of https://github.com/herpertutus/207assignment3
+      fixes
+      Merge branch 'main' of https://github.com/herpertutus/207assignment3
+      ticket quantity fix and confirmation page
+      small fix
+      small fix
+      Merge branch 'main' of https://github.com/herpertutus/207assignment3
+      small fix
+
+herpertutus (27):
+      Initial commit
+      re
+      shaky start
+      cleared repo
+      skeleton v2
+      added database, uncommented user_loader, added base template, added index route
+      index page
+      page templates
+      basic login functionality
+      registration functionality complete
+      models and tables
+      individual event uris working
+      way too much stuff for a single commit
+      Merge branch 'main' of https://github.com/herpertutus/207assignment3 into main
+      conflict resolution
+      minor fixes
+      db update
+      Merge branch 'main' of https://github.com/herpertutus/207assignment3 into main
+      Merge branch 'main' of https://github.com/herpertutus/207assignment3 into main
+      db change
+      small account page css fix
+      Merge branch 'main' of https://github.com/herpertutus/207assignment3 into main
+      added field to comment model
+      Update sitedata.db
+      Merge branch 'main' of https://github.com/herpertutus/207assignment3 into main
+      ignore db file changes
+      css and db changes
+
+mfedoulov (1):
+      commenting now connects to databse
+
+sf1220 (4):
+      added purchase view and form
+      fixed bugs in purchase
+      Status update and ticket number update
+      small fix
+
