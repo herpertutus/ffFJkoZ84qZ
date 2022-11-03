@@ -45,7 +45,7 @@ class PurchaseForm(FlaskForm):
     tickets = IntegerField("Ticket Purchase Quantity", validators=[InputRequired()])
     submit = SubmitField("Submit")
     
-class CreateComment(FlaskForm):
+class CommentForm(FlaskForm):
     commenttitle = StringField("Title", validators=[InputRequired(), Length(min=5, max= 200, message="Enter title between 5 and 200 charactors long")])
     content = StringField("Title", validators=[InputRequired(), Length(min=5, max= 250, message="Enter comment between 5 and 250 charactors long")])
     submit = SubmitField("Submit")

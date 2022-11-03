@@ -85,15 +85,21 @@
   <h2 class="spacertxt">User Reviews</h2>
 </div>
 
-<div class="container card comment">
-  <div class="card-body">
-    <h5 class="card-title">{{commenttitle}}</h5>
-    <hr>
-    <p class="card-text">{{content}}</p>
-    <p class="card-text"><small class="text-muted">Posted: {{date}}</small></p>
-    <p class="card-text"><small class="text-muted">By: {{commentername}}</small></p>
+{% if comments|length > 0 %}
+  {% for comments in comments %}
+  <div class="container card comment">
+    
+    <div class="card-body">
+      <h5 class="card-title">{{comments.content}}</h5>
+      <hr>
+      <p class="card-text">{{comments.content}}</p>
+      <p class="card-text"><small class="text-muted">Posted: {{comments.date}} </small></p>
+      <p class="card-text"><small class="text-muted">By: {{comments.commentername}}</small></p>
+    </div>
   </div>
-</div>
+  {% endfor %}
+{% endif %}
+
 
 <div>
   <h2 class="spacertxt">Write a Review</h2>

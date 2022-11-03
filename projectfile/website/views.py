@@ -7,7 +7,7 @@ import this
 from unicodedata import category
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_required, current_user
-from .forms import CreateEventForm, LoginForm, RegisterForm, PurchaseForm
+from .forms import CreateEventForm, LoginForm, RegisterForm, PurchaseForm, CommentForm
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from .models import User, Event, Comment, Booking
@@ -125,6 +125,7 @@ def eventdetails(eventid):
 
     if type(event) == Event:
         owner = User.query.filter_by(id=event.ownerid).first()
+        form = CommentForm()
         # if(owner != current_user):
         #     return render_template('eventdetails.html')
         return render_template('eventdetails.html', imgurl=event.imgurl,
@@ -140,6 +141,19 @@ def eventdetails(eventid):
                                eventid=event.id)
 
     # render some sort of an error, no event found
+    # Stick if stuff here for comments
+    form = CommentForm()
+    comments = Comment.query.filter_by(id=eventid).first()
+    if form.validate_on_submit():
+        # comment form values
+        content1 = form.content.data
+        commenttitle1 = form.commenttitle.data
+
+        new_comments = comments(content1, commenttitle1)
+                                
+        db.session.add(new_comments)
+        db.session.commit()
+
     return render_template('eventdetails.html')
 
 @bp.route('/purchase/<eventid>', methods=['GET', 'POST'])
