@@ -31,8 +31,7 @@ Seth (12):
       small fix
       Merge branch 'main' of https://github.com/herpertutus/207assignment3
       small fix
-
-herpertutus (27):
+Rem (27):
       Initial commit
       re
       shaky start

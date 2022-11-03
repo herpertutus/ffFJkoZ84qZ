@@ -156,7 +156,8 @@ def eventdetails(eventid):
                                creator=f"@{owner.username}",
                                tickets=event.tickets,
                                ticketprice=event.price,
-                               eventid=event.id)
+                               eventid=event.id,
+                               comments = comments)
 
 @bp.route('/purchase/<eventid>', methods=['GET', 'POST'])
 @login_required
