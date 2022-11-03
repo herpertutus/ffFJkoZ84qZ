@@ -132,7 +132,7 @@ def eventdetails(eventid):
     # render some sort of an error, no event found
     # Stick if stuff here for comments
     form = CommentForm()
-    comments = Event.query.filter_by(id=eventid).all()
+    comments = Event.query.filter_by(eventid=eventid).all()
     if form.validate_on_submit():
         # comment form values
         content1 = form.content.data
