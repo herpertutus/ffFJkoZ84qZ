@@ -125,7 +125,6 @@ def eventdetails(eventid):
 
     if type(event) == Event:
         owner = User.query.filter_by(id=event.ownerid).first()
-        form = CommentForm()
         # if(owner != current_user):
         #     return render_template('eventdetails.html')
         return render_template('eventdetails.html', imgurl=event.imgurl,
@@ -143,14 +142,12 @@ def eventdetails(eventid):
     # render some sort of an error, no event found
     # Stick if stuff here for comments
     form = CommentForm()
-    comments = Comment.query.filter_by(id=eventid).first()
+    comments = Event.query.filter_by(id=eventid).first()
     if form.validate_on_submit():
         # comment form values
         content1 = form.content.data
         commenttitle1 = form.commenttitle.data
-
-        new_comments = comments(content1, commenttitle1)
-                                
+        new_comments = comments(content1, commenttitle1)                   
         db.session.add(new_comments)
         db.session.commit()
 
