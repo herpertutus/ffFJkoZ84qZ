@@ -86,15 +86,15 @@
 </div>
 
 {% if comments|length > 0 %}
-  {% for comments in comments %}
+  {% for comment in comments %}
   <div class="container card comment">
     
     <div class="card-body">
-      <h5 class="card-title">{{comments.content}}</h5>
+      <h5 class="card-title">{{comment.commenttitle}}</h5>
       <hr>
-      <p class="card-text">{{comments.content}}</p>
-      <p class="card-text"><small class="text-muted">Posted: {{comments.date}} </small></p>
-      <p class="card-text"><small class="text-muted">By: {{comments.commentername}}</small></p>
+      <p class="card-text">{{comment.content}}</p>
+      <p class="card-text"><small class="text-muted">Posted: {{comment.date}} </small></p>
+      <p class="card-text"><small class="text-muted">By: {{comment.commentername}}</small></p>
     </div>
   </div>
   {% endfor %}
