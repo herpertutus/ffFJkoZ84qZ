@@ -132,12 +132,12 @@ def eventdetails(eventid):
     if form.validate_on_submit():
             new_comment = Comment(commenterid = current_user.id,
                                 commentername = current_user.username,
-                                content = form.content,
-                                date = datetime(),
-                                eventid = 1,
-                                commenttitle = form.commenttitle)                   
+                                content = form.content.data,
+                                eventid = eventid,
+                                commenttitle = form.commenttitle.data)                   
             db.session.add(new_comment)
             db.session.commit()
+            return redirect(url_for('main.allevents'))
 
     return render_template('eventdetails.html', imgurl=event.imgurl,
                                category=event.category,
@@ -150,7 +150,8 @@ def eventdetails(eventid):
                                tickets=event.tickets,
                                ticketprice=event.price,
                                eventid=event.id,
-                               comments = comments)
+                               comments = comments,
+                               form = form)
 
 @bp.route('/purchase/<eventid>', methods=['GET', 'POST'])
 @login_required
