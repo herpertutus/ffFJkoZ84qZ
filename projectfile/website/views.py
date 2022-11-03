@@ -129,22 +129,15 @@ def eventdetails(eventid):
     # Commenting things
     form = CommentForm()
     comments = Comment.query.filter_by(eventid=eventid).all()
-    print(f'>>>>>>>>>>>>>>>>>{comments}')
     if form.validate_on_submit():
-        # comment form values
-        content1 = form.content.data
-        commenttitle1 = form.commenttitle.data
-        commentername =current_user.username
-        commenterid = current_user.id
-        date1 = datetime()
-        new_comment = Comment(commenterid, 
-                             content1,
-                             commenttitle1,
-                             commentername,
-                             date1,
-                             comments=comments)                   
-        db.session.add(new_comment)
-        db.session.commit()
+            new_comment = Comment(commenterid = current_user.id,
+                                commentername = current_user.username,
+                                content = form.content,
+                                date = datetime(),
+                                eventid = 1,
+                                commenttitle = form.commenttitle)                   
+            db.session.add(new_comment)
+            db.session.commit()
 
     return render_template('eventdetails.html', imgurl=event.imgurl,
                                category=event.category,
