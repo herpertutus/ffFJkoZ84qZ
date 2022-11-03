@@ -127,7 +127,21 @@ def eventdetails(eventid):
         owner = User.query.filter_by(id=event.ownerid).first()
         # if(owner != current_user):
         #     return render_template('eventdetails.html')
-        return render_template('eventdetails.html', imgurl=event.imgurl,
+        return render_template('eventdetails.html')
+
+    # render some sort of an error, no event found
+    # Stick if stuff here for comments
+    form = CommentForm()
+    comments = Event.query.filter_by(id=eventid).all()
+    if form.validate_on_submit():
+        # comment form values
+        content1 = form.content.data
+        commenttitle1 = form.commenttitle.data
+        new_comments = comments(content1, commenttitle1)                   
+        db.session.add(new_comments)
+        db.session.commit()
+
+    return render_template('eventdetails.html', imgurl=event.imgurl,
                                category=event.category,
                                speaker=event.speaker,
                                title=event.title,
@@ -138,20 +152,6 @@ def eventdetails(eventid):
                                tickets=event.tickets,
                                ticketprice=event.price,
                                eventid=event.id)
-
-    # render some sort of an error, no event found
-    # Stick if stuff here for comments
-    form = CommentForm()
-    comments = Event.query.filter_by(id=eventid).first()
-    if form.validate_on_submit():
-        # comment form values
-        content1 = form.content.data
-        commenttitle1 = form.commenttitle.data
-        new_comments = comments(content1, commenttitle1)                   
-        db.session.add(new_comments)
-        db.session.commit()
-
-    return render_template('eventdetails.html')
 
 @bp.route('/purchase/<eventid>', methods=['GET', 'POST'])
 @login_required
