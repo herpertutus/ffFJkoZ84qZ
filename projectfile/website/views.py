@@ -1,6 +1,5 @@
 from cmath import log
-
-from datetime import datetime
+import datetime
 from functools import reduce
 import os
 import this
@@ -134,7 +133,9 @@ def eventdetails(eventid):
                                 commentername = current_user.username,
                                 content = form.content.data,
                                 eventid = eventid,
-                                commenttitle = form.commenttitle.data)                   
+                                commenttitle = form.commenttitle.data,
+                                date = datetime.date.today() 
+                                )               
             db.session.add(new_comment)
             db.session.commit()
             return redirect(url_for('main.allevents'))
